@@ -1,11 +1,13 @@
 import React from "react";
 import { FaKeyboard } from "react-icons/fa";
-import styled, { css } from "styled-components";
 
-const KeyboradBtn = () => {
-  const Wrapper = styled.div``;
+const KeyboradBtn = (props) => {
 
-  return <FaKeyboard size="30" />;
+  const onKeyboard = () => {
+    props.socket.emit('send', { name: 'keyboard' });
+  };
+
+  return <FaKeyboard size="30" onClick={onKeyboard}/>;
 };
 
 export default KeyboradBtn;
