@@ -1,42 +1,48 @@
-import React from "react";
+import React, {Component} from "react";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 import {
     Container,
     InputGroup,
     InputGroupAddon,
     Input,
     Button,
+    Row,
+    Col
 } from 'reactstrap';
 
 
-const ConnectBtn = (props) => {
+class ConnectBtn extends Component {
 
-    const onConnect = () => {
-        props.socket = new WebSocket('ws://211.219.136.130');
-        props.socket.onopen = function(evt) { onOpen(evt) };
-        props.socket.onclose = function(evt) { onClose(evt) };
+    isConnect = () => {
+        const { connected } = this.props;
+        console.log("isConnect");
+        console.log("connected", connected);
+        if(connected) {
+            return "green";
+        } else {
+            return "red";
+        }
     };
 
-    const onDisconnect = () => {
-        props.socket.close();
+    render() {
+        console.log("ConnectBtn", this.props)
+        return(
+            <Container>
+                <Row>
+                    <Col xs={9}>
+                        <InputGroup size={"sm"}>
+                            <Input placeholder={"211.219.136.130"} value={this.props.ipAddr} name="ipaddr" onChange={this.props.onChangeIpAddr}/>
+                            <InputGroupAddon addonType="append"><Button onClick={this.props.onConnect}>연결</Button></InputGroupAddon>
+                            <InputGroupAddon addonType="append"><Button onClick={this.props.onDisconnet}>해제</Button></InputGroupAddon>
+                        </InputGroup>
+                    </Col>
+                    <Col xs={1}>
+                        <IoIosCheckmarkCircle color={this.isConnect()} size={30}></IoIosCheckmarkCircle>
+                    </Col>
+                </Row>
+            </Container>
+        );
     };
-
-    const onOpen = (evt) => {
-        props.connected = true;
-    };
-
-    const onClose = (evt) => {
-        props.connected = false;
-    };
-
-    return (
-        <Container>
-            <InputGroup size={"xs"}>
-                <Input />
-                <InputGroupAddon addonType="append"><Button onClick={onConnect}>Connect</Button></InputGroupAddon>
-                <InputGroupAddon addonType="append"><Button onClick={onDisconnect}>Disconnect</Button></InputGroupAddon>
-            </InputGroup>
-        </Container>
-    )
 };
 
 export default ConnectBtn;

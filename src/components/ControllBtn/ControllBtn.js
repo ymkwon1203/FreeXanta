@@ -14,20 +14,20 @@ const ControllBtn = (props) => {
       <Container>
           <Row className="justify-content-center">
           <Col xs={{offset: 5 }}>
-            <PrevBtn socket={props.socket}/>
+            <PrevBtn socket={props.onSendCommand}/>
           </Col>
         </Row>
         <Row className="justify-content-center">
             <Col xs={{offset: 0 }}>
-            <KeyboardBtn socket={props.socket}/>
+            <KeyboardBtn socket={props.onSendCommand}/>
           </Col>
             <Col xs={{offset: 0 }}>
-            <ShowToggleBtn socket={props.socket}/>
+            <ShowToggleBtn socket={props.onSendCommand}/>
           </Col>
         </Row>
         <Row className="justify-content-center">
             <Col xs={{offset: 5 }}>
-            <NextBtn socket={props.socket}/>
+            <NextBtn socket={props.onSendCommand}/>
           </Col>
         </Row>
       </Container>
