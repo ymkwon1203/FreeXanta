@@ -10,22 +10,23 @@ const ControllBtn = (props) => {
     console.log(props);
 
     return (
+
       <Container>
-        <Row className="justify-content-center">
-          <Col className="col-1">
+          <Row className="justify-content-center">
+          <Col xs={{offset: 5 }}>
             <PrevBtn socket={props.socket}/>
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col className="col-1">
+            <Col xs={{offset: 0 }}>
             <KeyboardBtn socket={props.socket}/>
           </Col>
-          <Col className="col-1">
+            <Col xs={{offset: 0 }}>
             <ShowToggleBtn socket={props.socket}/>
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col className="col-1">
+            <Col xs={{offset: 5 }}>
             <NextBtn socket={props.socket}/>
           </Col>
         </Row>
