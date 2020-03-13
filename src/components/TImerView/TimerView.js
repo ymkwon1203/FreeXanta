@@ -1,9 +1,13 @@
 import React, {Component, Fragment} from "react";
 import {Row, Col, Container, Spinner} from "reactstrap";
 import Timer from "react-compound-timer";
-import {FaCircle} from "react-icons/fa";
-import { GiCircle } from "react-icons/gi";
+import {GiCircle} from "react-icons/gi";
 import {MdRefresh} from "react-icons/md";
+
+export const INITED = 'INITED';
+export const PLAYING = 'PLAYING';
+export const PAUSED = 'PAUSED';
+export const STOPPED = 'STOPPED';
 
 const ContainerStyle = {
 	position: "relative",
@@ -14,7 +18,7 @@ const ContainerStyle = {
 
 const TimerStyle = {
 	position: "absolute",
-	fontSize: "1.5rem",
+	fontSize: "1.3rem",
 	width: '8rem',
 	height: '8rem',
 	lineHeight: '8rem',
@@ -38,7 +42,7 @@ const CirCleStyle = {
 	top:"0",
 	left: "50%",
 	transform: "translate(-50%, 0%)",
-}
+};
 
 const ResetStyle = {
 	position: "absolute",
@@ -46,103 +50,74 @@ const ResetStyle = {
 	left: "64%"
 };
 
-const ResetAction = (props) => {
-
-	const { reset, getTime } = props;
-
-	console.log("getTime()", getTime());
-	if(getTime() < 0) {
-		reset();
-	}
-	return <div></div>;
-}
-
 class TimerView extends Component {
 
 	constructor() {
 		super();
 		this.state = {
-			timerState: "init",
-			initialTime: 60000,
-			resetFunc : null,
+			timerState: INITED,
+			initialTime: 1000 * 30,
 		};
 	};
 
-	test = (reset, getTime) => {
-		console.log("getTime()", getTime());
-		if(getTime() <= 0) {
-			reset();
-		}
+	onChageTimerState = (value) => {
 
-		return null;
-	}
+		this.setState({
+			...this.state,
+			timerState: value
+		});
 
-	resetAction = (el) => {
-		el.click();
-	}
+	};
 
-
+	resetRef = null;
 
 	render() {
+
+		let ViewSpinner = null;
+
+		if(this.state.timerState === PLAYING) {
+			ViewSpinner = (
+				<div style={SpinnerStyle}>
+					<Spinner color="primary" style={{width: "8rem", height: "8rem"}}/>
+				</div>
+			);
+		}
+
 		return (
 			<Container style={ContainerStyle}>
 				<Timer
 					formatValue={value => `${value < 10 ? `0${value}` : value}`}
-					initialTime={1000 * 3}
+					initialTime={this.state.initialTime}
 					direction="backward"
 					startImmediately={false}
-					onStart={() => {console.log('onStart hook')}}
-					onResume={() => console.log('onResume hook')}
-					onPause={() => console.log('onPause hook')}
-					onStop={() => console.log('onStop hook')}
-					onReset={() => console.log('onReset hook')}
+					onStart={() => {console.log('onStart hook'); this.onChageTimerState(PLAYING);}}
+					onResume={() => {console.log('onResume hook')}}
+					onPause={() => {console.log('onPause hook')}}
+					onStop={() => {console.log('onStop hook'); this.onChageTimerState(STOPPED);}}
+					onReset={() => {console.log('onReset hook')}}
 					checkpoints={[
 						{
 							time: 0,
 							callback: () => {
-								alert('Checkpoint A');
-								console.log(this.timer);
-								//this.resetAction();
-
+								alert('Times Up');
+								this.resetRef.click();
 							},
 						},
 					]}
 				>
 					{({start, resume, pause, stop, reset, timerState, getTimerState, getTime}) => {
-
 						console.log("getTimerState()", getTimerState());
-
-						//console.log("getTime()", getTime());
-						if(getTime() < 0) {
-
-						}
-
-						console.log(this.props);
-
 						return (
 							<Fragment>
 								<div style={TimerStyle} onClick={() => {
-
-									/*
-										export const INITED = 'INITED';
-										export const PLAYING = 'PLAYING';
-										export const PAUSED = 'PAUSED';
-										export const STOPPED = 'STOPPED';
-									*/
 									const nowState = getTimerState();
-									const run = nowState === 'INITED' || nowState === 'STOPPED' ? true : false;
-
-									console.log(nowState);
-									console.log(run);
-
+									const run = nowState === INITED || nowState === STOPPED ? true : false;
 									if(run) {
 										start();
 									} else {
 										stop();
 									}
 								}
-
-								
 								}>
 									{/* <Timer.Days /> days */}
 									<Timer.Hours/>:{/*hours*/}
@@ -153,7 +128,7 @@ class TimerView extends Component {
 
 
 								</div>
-								<div style={ResetStyle} onClick={()=> { stop(); reset(); } }  ref={this.resetAction}>
+								<div style={ResetStyle} onClick={()=> { stop(); reset(); } }  ref={ref => this.resetRef = ref}>
 									<MdRefresh size={"1.5rem"}></MdRefresh><span>Reset</span>
 								</div>
 
@@ -170,10 +145,11 @@ class TimerView extends Component {
 						)
 					}}
 				</Timer>
-				<div style={SpinnerStyle}>
-					<Spinner color="primary" style={{width: "8rem", height: "8rem"}} />
-				</div>
-				<div  style={CirCleStyle} >
+				{/*<div style={SpinnerStyle}>*/}
+				{/*	<Spinner color="primary" style={{width: "8rem", height: "8rem"}} />*/}
+				{/*</div>*/}
+				{ViewSpinner}
+				<div style={CirCleStyle} >
 				<GiCircle size={"8rem"}/>
 				</div>
 			</Container>
