@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {Row, Col, Container, Spinner} from "reactstrap";
+import {Container, Spinner} from "reactstrap";
 import Timer from "react-compound-timer";
 import {GiCircle} from "react-icons/gi";
 import {MdRefresh} from "react-icons/md";
@@ -69,11 +69,29 @@ class TimerView extends Component {
 
 	};
 
+	convTime = (time) => {
+		const strTime = time.split(":");
+		const hour = parseInt(strTime[0]);
+		const min = parseInt(strTime[1]);
+		let convTime = (hour*1000*60*60) + (min*1000*60);
+
+		return convTime;
+	};
+
 	resetRef = null;
 
 	render() {
-
 		let ViewSpinner = null;
+		const { setting_initialTime } = this.props;
+		let initialTime = 0;
+		let direction = false
+		if(this.props.setting_timerDirection) {
+			direction = "forward";
+			initialTime = 0;
+		} else {
+			direction = "backward";
+			initialTime = this.convTime(setting_initialTime);
+		}
 
 		if(this.state.timerState === PLAYING) {
 			ViewSpinner = (
@@ -87,8 +105,8 @@ class TimerView extends Component {
 			<Container style={ContainerStyle}>
 				<Timer
 					formatValue={value => `${value < 10 ? `0${value}` : value}`}
-					initialTime={this.state.initialTime}
-					direction="backward"
+					initialTime={initialTime}
+					direction={direction}
 					startImmediately={false}
 					onStart={() => {console.log('onStart hook'); this.onChageTimerState(PLAYING);}}
 					onResume={() => {console.log('onResume hook')}}
@@ -106,7 +124,7 @@ class TimerView extends Component {
 					]}
 				>
 					{({start, resume, pause, stop, reset, timerState, getTimerState, getTime}) => {
-						console.log("getTimerState()", getTimerState());
+						//console.log("getTimerState()", getTimerState());
 						return (
 							<Fragment>
 								<div style={TimerStyle} onClick={() => {
@@ -153,7 +171,6 @@ class TimerView extends Component {
 				<GiCircle size={"8rem"}/>
 				</div>
 			</Container>
-
 		)
 	}
 }

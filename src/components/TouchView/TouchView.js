@@ -57,7 +57,7 @@ const swipeMsgStyle = {
 	textAlign: "center"
 };
 
-class TouchPad extends Component {
+class TouchView extends Component {
 
 	constructor() {
 		super();
@@ -137,4 +137,4 @@ class TouchPad extends Component {
 	}
 }
 
-export default TouchPad;
+export default TouchView;

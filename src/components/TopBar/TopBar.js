@@ -1,8 +1,9 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { FiWifiOff, FiWifi } from "react-icons/fi";
 import { FaHandPointUp } from "react-icons/fa";
 import { MdSettings, MdMouse, MdTouchApp, MdGamepad } from "react-icons/md";
-import {Row} from "reactstrap";
+import { Row, Container } from "reactstrap";
+import {VIEW_SETTINGS, VIEW_CONNECT, VIEW_GESTURE, VIEW_CLICK, VIEW_MOUSE} from "../Define/Define";
 
 const topBarStyle = {
 	top: "1vh",
@@ -41,26 +42,24 @@ const mousePadBtnStyle = {
 	transform: "translate(-95%, 0%)",
 };
 
-
-
 const iconStyle = "2.5rem";
 
-class TobBar extends Component {
+const TobBar = (props) => {
 
+	const { onChangeMode }  = props;
 
-	render() {
-		return (
+	return (
+		<Container>
 			<Row className="justify-content-center" style={topBarStyle} >
-				<MdSettings style={settingBtnStyle} size={iconStyle}/>
+				<MdSettings onClick={() => onChangeMode(VIEW_SETTINGS)} style={settingBtnStyle} size={iconStyle}/>
 				{/*<FiWifiOff size={iconStyle} />*/}
-				<FiWifi style={connectBtnStyle}  size={iconStyle} />
-				<MdTouchApp style={touchPadBtnStyle}  size={iconStyle} />
-				<MdGamepad style={keyPadBtnStyle}  size={iconStyle} />
-				<MdMouse style={mousePadBtnStyle}  size={iconStyle} />
+				<FiWifi onClick={() => onChangeMode(VIEW_CONNECT)} style={connectBtnStyle}  size={iconStyle} />
+				<MdTouchApp onClick={() => onChangeMode(VIEW_GESTURE)} style={touchPadBtnStyle}  size={iconStyle} />
+				<MdGamepad onClick={() => onChangeMode(VIEW_CLICK)} style={keyPadBtnStyle}  size={iconStyle} />
+				<MdMouse onClick={() => onChangeMode(VIEW_MOUSE)} style={mousePadBtnStyle}  size={iconStyle} />
 			</Row>
-		);
-	};
-
-}
+		</Container>
+	);
+};
 
 export default TobBar;
