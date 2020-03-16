@@ -8358,6 +8358,11 @@ pretty-format@^24.0.0, pretty-format@^24.3.0, pretty-format@^24.9.0:
     ansi-styles "^3.2.0"
     react-is "^16.8.4"
 
+prevent-pull-refresh@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/prevent-pull-refresh/-/prevent-pull-refresh-1.0.5.tgz#586f58b85a15ebdae53f1ce4942fec283a6eb69f"
+  integrity sha512-3O3s5cK/IYmU/0Xyb3KFDy0TvcC46NefOWgfiMYAUN+teixkk6Ibewd/RkpGkq0EsqHrl9sE8qGzUvOGCO+m3g==
+
 private@^0.1.6:
   version "0.1.8"
   resolved "https://registry.npmjs.org/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"

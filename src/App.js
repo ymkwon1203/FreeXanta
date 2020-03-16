@@ -16,6 +16,7 @@ import {SET_MODE, SET_IP, SET_MAIN, SET_TIMER} from "./components/Define/Define"
 import {VALUE_GESTURE, VALUE_CLICK, VALUE_MOUSE} from "./components/Define/Define";
 
 import "./App.css";
+import 'prevent-pull-refresh';
 
 class App extends Component {
 
@@ -275,22 +276,19 @@ class App extends Component {
 				{this.state.mode === VIEW_SETTINGS &&
 					<SettingsView settingValue={settingValue} settingFunc={settingFunc}/>
 				}
+				{this.state.mode !== VIEW_SETTINGS &&
+					<TimerView
+						setting_initialTime={this.state.setting_initialTime}
+						setting_timerDirection={this.state.setting_timerDirection}
+					/>
+				}
 				{this.state.mode === VIEW_GESTURE &&
-					<>
-						<TimerView
-							setting_initialTime={this.state.setting_initialTime}
-							setting_timerDirection={this.state.setting_timerDirection}/>
-						<TouchView />
-					</>
+					<TouchView />
 				}
 				{this.state.mode === VIEW_MOUSE &&
-					<>
-						<TimerView
-							setting_initialTime={this.state.setting_initialTime}
-							setting_timerDirection={this.state.setting_timerDirection}/>
-						<MouseView />
-					</>
+					<MouseView />
 				}
+
 				{/*<Container>*/}
 				{/*<Row>*/}
 				{/*	<ConnectBtn*/}

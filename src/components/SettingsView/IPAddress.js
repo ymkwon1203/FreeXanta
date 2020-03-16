@@ -34,7 +34,7 @@ const IPAddress = (props) => {
 				<div style={ItemNameStyle}>IP Address</div>
 				<div style={{marginLeft: "auto"}}>
 					<InputMask
-						style={{ width: "130px"}}
+						style={{ width: "130px", textAlign: "center"}}
 						mask = "999.999.999.999"
 						// defaultValue = {ipAddress}
 						maskChar="_"

@@ -57,7 +57,7 @@ const SetTimer = (props) => {
 	};
 
 	return (
-		<TimeField style={{width: "47px"}} value={time} onChange={onTimeChange} />
+		<TimeField style={{width: "55px", textAlign: "center"}} value={time} onChange={onTimeChange} />
 	);
 };
 
