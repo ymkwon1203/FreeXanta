@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import ControllBtn from './components/ControllBtn/ControllBtn';
-import ConnectBtn from "./components/ConnectBtn/ConnectBtn";
-import MouseBtn from "./components/MouseBtn/MouseBtn";
-import Test from "./components/MouseBtn/Test"
+import ControllBtn from './components/0_old/ControllBtn/ControllBtn';
+import ConnectBtn from "./components/0_old/ConnectBtn/ConnectBtn";
+import MouseBtn from "./components/0_old/MouseBtn/MouseBtn";
+import Test from "./components/0_old/MouseBtn/Test"
 
 import TopBar from "./components/TopBar/TopBar";
 import TimerView from "./components/TimerView/TimerView";
