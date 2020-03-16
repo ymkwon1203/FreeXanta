@@ -8,7 +8,7 @@ import TopBar from "./components/TopBar/TopBar";
 import TimerView from "./components/TimerView/TimerView";
 import TouchView from "./components/TouchView/TouchView";
 import SettingsView from "./components/SettingsView/SettingsView";
-
+import MouseView from "./components/MouseView/MouseView";
 import {Row, Col, Container} from "reactstrap";
 
 import {VIEW_SETTINGS, VIEW_CONNECT, VIEW_GESTURE, VIEW_CLICK, VIEW_MOUSE} from "./components/Define/Define";
@@ -275,7 +275,7 @@ class App extends Component {
 				{this.state.mode === VIEW_SETTINGS &&
 					<SettingsView settingValue={settingValue} settingFunc={settingFunc}/>
 				}
-				{this.state.mode !== VIEW_SETTINGS &&
+				{this.state.mode === VIEW_GESTURE &&
 					<>
 						<TimerView
 							setting_initialTime={this.state.setting_initialTime}
@@ -283,7 +283,14 @@ class App extends Component {
 						<TouchView />
 					</>
 				}
-
+				{this.state.mode === VIEW_MOUSE &&
+					<>
+						<TimerView
+							setting_initialTime={this.state.setting_initialTime}
+							setting_timerDirection={this.state.setting_timerDirection}/>
+						<MouseView />
+					</>
+				}
 				{/*<Container>*/}
 				{/*<Row>*/}
 				{/*	<ConnectBtn*/}
