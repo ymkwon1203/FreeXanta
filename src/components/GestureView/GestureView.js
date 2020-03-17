@@ -57,7 +57,7 @@ const swipeMsgStyle = {
 	textAlign: "center"
 };
 
-class TouchView extends Component {
+class GestureView extends Component {
 
 	constructor() {
 		super();
@@ -137,4 +137,4 @@ class TouchView extends Component {
 	}
 }
 
-export default TouchView;
+export default GestureView;

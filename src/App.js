@@ -6,7 +6,7 @@ import Test from "./components/0_old/MouseBtn/Test"
 
 import TopBar from "./components/TopBar/TopBar";
 import TimerView from "./components/TimerView/TimerView";
-import TouchView from "./components/TouchView/TouchView";
+import GestureView from "./components/GestureView/GestureView";
 import SettingsView from "./components/SettingsView/SettingsView";
 import MouseView from "./components/MouseView/MouseView";
 import ClickView from "./components/ClickView/ClickView";
@@ -284,7 +284,7 @@ class App extends Component {
 					/>
 				}
 				{this.state.mode === VIEW_GESTURE &&
-					<TouchView />
+					<GestureView />
 				}
 				{this.state.mode === VIEW_CLICK &&
 					<ClickView />
