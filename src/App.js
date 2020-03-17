@@ -9,6 +9,7 @@ import TimerView from "./components/TimerView/TimerView";
 import TouchView from "./components/TouchView/TouchView";
 import SettingsView from "./components/SettingsView/SettingsView";
 import MouseView from "./components/MouseView/MouseView";
+import ClickView from "./components/ClickView/ClickView";
 import {Row, Col, Container} from "reactstrap";
 
 import {VIEW_SETTINGS, VIEW_CONNECT, VIEW_GESTURE, VIEW_CLICK, VIEW_MOUSE} from "./components/Define/Define";
@@ -284,6 +285,9 @@ class App extends Component {
 				}
 				{this.state.mode === VIEW_GESTURE &&
 					<TouchView />
+				}
+				{this.state.mode === VIEW_CLICK &&
+					<ClickView />
 				}
 				{this.state.mode === VIEW_MOUSE &&
 					<MouseView />
