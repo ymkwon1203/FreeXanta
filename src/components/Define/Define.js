@@ -21,3 +21,18 @@ export const VIEW_MOUSE = 4;
 export const VALUE_GESTURE = "Gesture";
 export const VALUE_CLICK = "Click";
 export const VALUE_MOUSE = "Mouse";
+
+export const CMD_DOWN = "{DOWN}";
+export const CMD_LEFT = "{LEFT}";
+export const CMD_RIGHT = "{RIGHT}";
+export const CMD_UP = "{UP}";
+export const CMD_HOME = "{HOME}";
+export const CMD_END = "{END}";
+export const CMD_ESC = "{ESC}";
+export const CMD_PGUP = "{PGUP}";
+export const CMD_PGDN = "{PGDN}";
+export const CMD_F5 = "{F5}";
+export const CMD_PLUS_F5 = "+{F5}";
+
+export const CMD_SHOW = "show";
+export const CMD_HIDE = "hide";

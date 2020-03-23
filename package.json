@@ -12,6 +12,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
+    "ip": "^1.1.5",
     "prevent-pull-refresh": "^1.0.5",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",

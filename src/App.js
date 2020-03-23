@@ -6,10 +6,9 @@ import Test from "./components/0_old/MouseBtn/Test"
 
 import TopBar from "./components/TopBar/TopBar";
 import TimerView from "./components/TimerView/TimerView";
-import GestureView from "./components/GestureView/GestureView";
+import TouchView from "./components/TouchView/TouchView";
 import SettingsView from "./components/SettingsView/SettingsView";
 import MouseView from "./components/MouseView/MouseView";
-import ClickView from "./components/ClickView/ClickView";
 import {Row, Col, Container} from "reactstrap";
 
 import {VIEW_SETTINGS, VIEW_CONNECT, VIEW_GESTURE, VIEW_CLICK, VIEW_MOUSE} from "./components/Define/Define";
@@ -18,6 +17,7 @@ import {VALUE_GESTURE, VALUE_CLICK, VALUE_MOUSE} from "./components/Define/Defin
 
 import "./App.css";
 import 'prevent-pull-refresh';
+import ip from 'ip';
 
 class App extends Component {
 
@@ -133,14 +133,20 @@ class App extends Component {
 	onError = (evt) => {
 		console.log("onError");
 		console.log("evt", evt);
+		this.setState({
+			...this.state,
+			connected: false
+		})
 	};
 
 	onConnect = () => {
 		console.log("onConnect");
-		console.log("this.state.ipAddr", this.state.ipAddr);
+		console.log("setting_ipAddress", this.state.setting_ipAddress);
 		//const newWebSocket = new WebSocket('ws://211.219.136.130');
-		const url = 'ws://' + this.state.ipAddr;
-		const newWebSocket = new WebSocket(url);
+		const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|(\*(?!.*\d)))(\.|$)){4}$/;
+		console.log(this.state.setting_ipAddress + ': ' + regex.test(this.state.setting_ipAddress));
+		const url = 'ws://' + ip.mask(this.state.setting_ipAddress, '255.255.255.255');
+		const newWebSocket = new WebSocket("ws://172.30.1.33");
 		newWebSocket.onopen = (evt) => this.onOpen(evt);
 		newWebSocket.onclose = (evt) => this.onClose(evt);
 		newWebSocket.onmessage = (evt) => this.onMessage(evt);
@@ -161,17 +167,31 @@ class App extends Component {
 		console.log("onDisconnect");
 		console.log(" this.state.webSocket", this.state.webSocket);
 		this.state.webSocket.close();
-		/*
 		this.setState({
 			...this.state,
 			webSocket: null
 		})
-
-		 */
 	};
 
-	onSendCommand = () => {
+	onSend = (message) => {
+		if(this.state.webSocket !== null) {
+			this.state.webSocket.send(message);
+		}
+	};
 
+	onSendKeyCMD = (cmd) => {
+		const onCMD = '{"type":"request", "cmd":"keyboard", "subcmd":"stroke-t1", "data": "'+ cmd + '"}';
+		this.onSend(onCMD);
+	};
+
+	onBlackScreenCMD = (cmd) => {
+		const onCMD = '{"type":"request", "cmd":"blackscreen", "subcmd":"'+cmd+'"}';
+		this.onSend(onCMD);
+	};
+
+	onMouseCursorCMD = (dx, dy, x, y) => {
+		const onCMD = '{"type":"request","cmd":"mouse", "subcmd":"move", "data":{"dx":'+dx+', "dy":'+dy+', "x":'+x+',"y":'+y+'} }';
+		this.onSend(onCMD);
 	};
 
 	onMouseCursorMove = (e) => {
@@ -271,9 +291,21 @@ class App extends Component {
 			setting_ipAddress: this.state.setting_ipAddress,
 		};
 
+		const cmdFunc = {
+			onSendKeyCMD: this.onSendKeyCMD,
+			onBlackScreenCMD: this.onBlackScreenCMD,
+			onMouseCursorCMD: this.onMouseCursorCMD,
+			onMouseCursorMove: this.onMouseCursorMove
+		};
+
+		const connFunc = {
+			onConnect: this.onConnect,
+			onDisconnect: this.onDisconnect
+		};
+
 		return (
 			<div className="App">
-				<TopBar onChangeMode={this.onChangeMode}/>
+				<TopBar mode={this.state.mode} onChangeMode={this.onChangeMode} connected={this.state.connected} connFunc={connFunc}/>
 				{this.state.mode === VIEW_SETTINGS &&
 					<SettingsView settingValue={settingValue} settingFunc={settingFunc}/>
 				}
@@ -284,13 +316,10 @@ class App extends Component {
 					/>
 				}
 				{this.state.mode === VIEW_GESTURE &&
-					<GestureView />
-				}
-				{this.state.mode === VIEW_CLICK &&
-					<ClickView />
+					<TouchView cmdFunc={cmdFunc}/>
 				}
 				{this.state.mode === VIEW_MOUSE &&
-					<MouseView />
+					<MouseView cmdFunc={cmdFunc} />
 				}
 
 				{/*<Container>*/}

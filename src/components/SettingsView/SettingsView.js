@@ -44,7 +44,7 @@ const SettingMenu = (props) => {
 };
 
 const SettingsView = (props) => {
-	const {settingValue, settingFunc} = props;
+	const {settingValue, settingFunc, connFunc} = props;
 
 	console.log("settingValue", settingValue);
 	console.log("settingsFunc", settingFunc);
