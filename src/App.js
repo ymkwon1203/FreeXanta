@@ -6,7 +6,7 @@ import Test from "./components/0_old/MouseBtn/Test"
 
 import TopBar from "./components/TopBar/TopBar";
 import TimerView from "./components/TimerView/TimerView";
-import TouchView from "./components/TouchView/TouchView";
+import GestureView from "./components/GestureView/GestureView";
 import SettingsView from "./components/SettingsView/SettingsView";
 import MouseView from "./components/MouseView/MouseView";
 import {Row, Col, Container} from "reactstrap";
@@ -316,7 +316,7 @@ class App extends Component {
 					/>
 				}
 				{this.state.mode === VIEW_GESTURE &&
-					<TouchView cmdFunc={cmdFunc}/>
+					<GestureView cmdFunc={cmdFunc}/>
 				}
 				{this.state.mode === VIEW_MOUSE &&
 					<MouseView cmdFunc={cmdFunc} />
