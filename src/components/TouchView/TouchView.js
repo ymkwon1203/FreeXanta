@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {FaSquare, FaAngleDoubleDown, FaAngleDoubleLeft, FaAngleDoubleRight, FaAngleDoubleUp} from "react-icons/fa";
 import {useSwipeable, Swipeable} from 'react-swipeable'
 import {Row, Col, Container} from "reactstrap";
+import * as Define from "../Define/Define";
 
 const ContainerStyle = {
 	position: "relative",
@@ -62,36 +63,60 @@ class TouchView extends Component {
 	constructor() {
 		super();
 		this.state = {
-			log: ""
+			log: "",
+			show: true,
+			slideShow: false,
 		};
 	}
 
 	swipingLeft = (e, absX) => {
 		console.log("You Swiped Left...", e, absX);
 		this.setState({
+			...this.state,
 			log: "You Swiped Left..."
 		});
+		this.props.cmdFunc.onSendKeyCMD(Define.CMD_PGUP);
 	};
 
 	swipedRight = (e, absX) => {
 		console.log("You Swiped Right...", e, absX);
 		this.setState({
+			...this.state,
 			log: "You Swiped Right..."
 		});
+		this.props.cmdFunc.onSendKeyCMD(Define.CMD_PGDN);
 	};
 
 	swipedUp = (e, deltaY, isFlick) => {
 		console.log("You Swiped Up...", e, deltaY, isFlick);
+
+		if(this.state.sildeshow) {
+			this.props.cmdFunc.onSendKeyCMD(Define.CMD_ESC);
+		} else {
+			this.props.cmdFunc.onSendKeyCMD(Define.CMD_F5);
+		}
+
 		this.setState({
-			log: "You Swiped Up..."
+			...this.state,
+			log: "You Swiped Up...",
+			sildeshow: !this.state.sildeshow
 		});
 	};
 
 	swipedDown = (e, deltaY, isFlick) => {
 		console.log("You Swiped Down...", e, deltaY, isFlick);
+		console.log("this.show", this.show);
+		if(this.state.show) {
+			this.props.cmdFunc.onBlackScreenCMD(Define.CMD_HIDE);
+		} else {
+			this.props.cmdFunc.onBlackScreenCMD(Define.CMD_SHOW);
+		}
 		this.setState({
-			log: "You Swiped Down..."
+			...this.state,
+			log: "You Swiped Down...",
+			show: !this.state.show
 		});
+
 	};
 
 
@@ -108,12 +133,12 @@ class TouchView extends Component {
 				           onSwipedDown={this.swipedDown}
 				>
 					<div style={arrowUpStyle} >
-						<div>Black Out</div>
+						<div>Slide Show</div>
 						<FaAngleDoubleUp size={arrowSize}/>
 					</div>
 					<div style={arrowDownStyle}>
 						<FaAngleDoubleDown  size={arrowSize}/>
-						<div>Show</div>
+						<div>Black Out</div>
 					</div>
 					<div style={arrowLeftStyle}>
 						<div>Prev</div>

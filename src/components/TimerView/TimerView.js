@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import {Container, Spinner} from "reactstrap";
 import Timer from "react-compound-timer";
-import {GiCircle} from "react-icons/gi";
+import {GiCircle, GiPlainCircle} from "react-icons/gi";
 import {MdRefresh} from "react-icons/md";
 
 export const INITED = 'INITED';
