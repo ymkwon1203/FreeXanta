@@ -197,9 +197,11 @@ class App extends Component {
 	onMouseCursorMove = (e) => {
 		this.setState({
 			...this.state,
-			mouse_x: e.nativeEvent.offsetX,
-			mouse_y: e.nativeEvent.offsetY
+			mouse_x: e.movementX,
+			mouse_y: e.movementY
 		});
+		const onCMD = '{"type":"request","cmd":"mouse", "subcmd":"move", "data":{"dx":'+e.movementX+', "dy":'+e.movementY+', "x":'+x+',"y":'+y+'} }';
+		this.onSend(onCMD);
 		console.log(this.state.mouse_x, this.state.mouse_y);
 	};
 
