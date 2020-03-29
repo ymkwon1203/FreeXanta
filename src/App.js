@@ -77,7 +77,7 @@ class App extends Component {
 		this.state = {
 			webSocket: null,
 			connected: false,
-			ipAddr: "211.219.136.130",
+			ipAddr: "192.168.025.022",
 			mouse_x: 0,
 			mouse_y: 0,
 
@@ -146,11 +146,13 @@ class App extends Component {
 		const regex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|(\*(?!.*\d)))(\.|$)){4}$/;
 		console.log(this.state.setting_ipAddress + ': ' + regex.test(this.state.setting_ipAddress));
 		const url = 'ws://' + ip.mask(this.state.setting_ipAddress, '255.255.255.255');
-		const newWebSocket = new WebSocket("ws://172.30.1.33");
+		//const newWebSocket = new WebSocket("ws://192.168.025.022");
+		const newWebSocket = new WebSocket(url);
 		newWebSocket.onopen = (evt) => this.onOpen(evt);
 		newWebSocket.onclose = (evt) => this.onClose(evt);
 		newWebSocket.onmessage = (evt) => this.onMessage(evt);
 		newWebSocket.onerror = (evt) => this.onError(evt);
+		console.log(newWebSocket.url);
 
 		console.log("newWebSocket", newWebSocket);
 
@@ -189,20 +191,19 @@ class App extends Component {
 		this.onSend(onCMD);
 	};
 
-	onMouseCursorCMD = (dx, dy, x, y) => {
-		const onCMD = '{"type":"request","cmd":"mouse", "subcmd":"move", "data":{"dx":'+dx+', "dy":'+dy+', "x":'+x+',"y":'+y+'} }';
+	onMouseCursorCMD = (cmd) => {
+		const onCMD = '{"type":"request","cmd":"mouse", "subcmd":"'+cmd+'"}';
 		this.onSend(onCMD);
 	};
 
 	onMouseCursorMove = (e) => {
 		this.setState({
 			...this.state,
-			mouse_x: e.movementX,
-			mouse_y: e.movementY
+			mouse_x: e.deltaX,
+			mouse_y: e.deltaY
 		});
-		const onCMD = '{"type":"request","cmd":"mouse", "subcmd":"move", "data":{"dx":'+e.movementX+', "dy":'+e.movementY+', "x":'+x+',"y":'+y+'} }';
+		const onCMD = '{"type":"request","cmd":"mouse", "subcmd":"move", "data":{"dx":'+e.deltaX*-0.1 +', "dy":'+e.deltaY*-0.1 +', "x":'+e.pageX+',"y":'+e.pageY+'} }';
 		this.onSend(onCMD);
-		console.log(this.state.mouse_x, this.state.mouse_y);
 	};
 
 
