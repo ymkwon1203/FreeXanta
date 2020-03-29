@@ -77,7 +77,8 @@ module.exports = {
 		,
 		new CopyWebpackPlugin([{
 			context: './public',
-			from: '*.*'
+			//from: '*.*'
+			from: '**/*'
 		}]),
 		new SWprecacheWebpackPlugin({
 			staticFileGlobs: [
