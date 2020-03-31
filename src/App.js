@@ -9,6 +9,7 @@ import TimerView from "./components/TimerView/TimerView";
 import GestureView from "./components/GestureView/GestureView";
 import SettingsView from "./components/SettingsView/SettingsView";
 import MouseView from "./components/MouseView/MouseView";
+import ClickView from "./components/ClickView/ClickView";
 import {Row, Col, Container} from "reactstrap";
 
 import {VIEW_SETTINGS, VIEW_CONNECT, VIEW_GESTURE, VIEW_CLICK, VIEW_MOUSE} from "./components/Define/Define";
@@ -317,6 +318,9 @@ class App extends Component {
 						setting_initialTime={this.state.setting_initialTime}
 						setting_timerDirection={this.state.setting_timerDirection}
 					/>
+				}
+				{this.state.mode === VIEW_CLICK &&
+					<ClickView cmdFunc={cmdFunc}/>
 				}
 				{this.state.mode === VIEW_GESTURE &&
 					<GestureView cmdFunc={cmdFunc}/>
